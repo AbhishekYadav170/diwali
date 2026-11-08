@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Diwali</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="fx"></canvas>
+
+<div class="stage" id="stage">
+  <div class="diya-wrap">
+    <div class="glow"></div>
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="fg" cx="50%" cy="75%" r="70%">
+          <stop offset="0%"  stop-color="#fffbe0"/>
+          <stop offset="45%" stop-color="#ffd24a"/>
+          <stop offset="100%" stop-color="#ff6a00"/>
+        </radialGradient>
+      </defs>
+
+      <!-- base / stand -->
+      <path class="draw base" pathLength="1" d="M78 160 L122 160 L132 180 L68 180 Z"/>
+      <!-- bowl -->
+      <path class="draw bowl" pathLength="1" d="M22 112 C30 172 170 172 178 112 Z"/>
+      <!-- rim -->
+      <ellipse class="draw rim" pathLength="1" cx="100" cy="112" rx="78" ry="13"/>
+      <!-- oil -->
+      <ellipse class="oil" cx="100" cy="112" rx="66" ry="9" fill="#ffcf6b" opacity="0"/>
+      <!-- wick -->
+      <path class="draw wick" pathLength="1" d="M100 112 L100 96"/>
+
+      <!-- flame -->
+      <g class="flame-group">
+        <g class="flame-inner">
+          <path d="M100 96 C80 76 92 56 100 30 C108 56 120 76 100 96 Z" fill="url(#fg)"/>
+          <path d="M100 94 C91 82 96 72 100 60 C104 72 109 82 100 94 Z" fill="#fff8d0" opacity=".9"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <h1 class="title" id="title"></h1>
+  <p class="sub">आपको और आपके परिवार को दीपावली की हार्दिक शुभकामनाएँ ✨</p>
+  <button id="replay">🔁 Replay</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

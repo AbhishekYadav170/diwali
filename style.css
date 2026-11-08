@@ -1,0 +1,151 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 60%, #2b0a3d 0%, #12031d 55%, #05010a 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+canvas#fx {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- DIYA ---------- */
+.diya-wrap {
+  position: relative;
+  width: min(70vw, 340px);
+  aspect-ratio: 1;
+}
+
+svg { width: 100%; height: 100%; overflow: visible; }
+
+.draw {
+  fill: transparent;
+  stroke: #ffb347;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.play .bowl { animation: draw 2.2s ease forwards, fillBowl 1.2s ease 2.2s forwards; }
+.play .rim  { animation: draw 1.2s ease 1.2s forwards, fillRim 1s ease 2.4s forwards; }
+.play .base { animation: draw 1.4s ease 0.3s forwards, fillBase 1.2s ease 2.2s forwards; }
+.play .wick { animation: draw 0.8s ease 3.4s forwards; stroke: #f3d9a4; stroke-width: 4; }
+.play .oil  { animation: fadeIn 1s ease 3.2s forwards; }
+
+@keyframes draw     { to { stroke-dashoffset: 0; } }
+@keyframes fillBowl { to { fill: #c2570c; } }
+@keyframes fillRim  { to { fill: #ffb347; } }
+@keyframes fillBase { to { fill: #8f3d08; } }
+@keyframes fadeIn   { to { opacity: 1; } }
+
+.oil { opacity: 0; }
+
+/* Flame */
+.flame-group {
+  transform-origin: 100px 95px;
+  transform: scale(0);
+  opacity: 0;
+}
+.play .flame-group {
+  animation: ignite 1.4s cubic-bezier(.2, 1.4, .4, 1) 4.2s forwards;
+}
+.flame-inner {
+  transform-origin: 100px 95px;
+  animation: flicker 0.18s ease-in-out infinite alternate;
+}
+@keyframes ignite {
+  0%   { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes flicker {
+  0%   { transform: scale(1, 1) rotate(-1.5deg); }
+  100% { transform: scale(0.94, 1.07) rotate(1.5deg); }
+}
+
+/* Glow behind the flame */
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  width: 85%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,190,70,.55) 0%, rgba(255,140,30,.22) 40%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+.play .glow {
+  animation: glowIn 2s ease 4.4s forwards, pulse 2.4s ease-in-out 6.4s infinite alternate;
+}
+@keyframes glowIn { to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+@keyframes pulse  { from { opacity: .75; } to { opacity: 1; transform: translate(-50%, -50%) scale(1.08); } }
+
+/* ---------- TEXT ---------- */
+.title {
+  margin-top: 10px;
+  font-size: clamp(2.2rem, 9vw, 4.6rem);
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 .35em;
+}
+.word { display: inline-flex; }
+.letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px) scale(.6);
+  background: linear-gradient(180deg, #fff3b0 0%, #ffb347 55%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(255,160,40,.65));
+}
+.play .letter { animation: letterIn .7s cubic-bezier(.2, 1.4, .4, 1) forwards; }
+@keyframes letterIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.sub {
+  margin-top: 12px;
+  color: #f7d9a8;
+  font-size: clamp(.95rem, 3.2vw, 1.3rem);
+  opacity: 0;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 0 16px;
+}
+.play .sub { animation: fadeIn 1.5s ease 8.2s forwards; }
+
+button {
+  margin-top: 26px;
+  padding: 10px 26px;
+  border: 2px solid #ffb347;
+  background: transparent;
+  color: #ffb347;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: .25s;
+}
+button:hover { background: #ffb347; color: #2b0a3d; }
