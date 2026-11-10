@@ -146,6 +146,6 @@ button {
   font-size: 1rem;
   border-radius: 32px;
   cursor: pointer;
-  transition: .25s;
+  transition: .26s;
 }
 button:hover { background: #ffb347; color: #2b0a3d; }
